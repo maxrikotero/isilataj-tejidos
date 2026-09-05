@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://isilataj-tejidos-historia.web.app/sitemap.xml

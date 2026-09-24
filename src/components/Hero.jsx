@@ -1,6 +1,7 @@
-import { contacto, waLink, destacados } from '../data/catalog'
+import { contacto, waLink } from '../data/catalog'
+import { imgUrl } from '../lib/cloudinary'
 
-function Hero() {
+function Hero({ destacados }) {
   return (
     <section className="hero" id="inicio">
       <div className="wrap hero-grid">
@@ -42,12 +43,12 @@ function Hero() {
       </div>
 
       <div className="wrap hero-strip">
-        {destacados.slice(0, 4).map((p) => (
-          <a className="strip-card" href="#piezas" key={p.id}>
-            <img src={p.fotos[0]} alt={p.nombre} loading="lazy" />
+        {destacados.slice(0, 4).map((producto) => (
+          <a className="strip-card" href="#piezas" key={producto.id}>
+            <img src={imgUrl(producto.fotos[0], { w: 200 })} alt={producto.nombre} loading="lazy" />
             <div>
-              <span className="strip-name">{p.nombre}</span>
-              <span className="strip-author">{p.artesana}</span>
+              <span className="strip-name">{producto.nombre}</span>
+              <span className="strip-author">{producto.artesana}</span>
             </div>
           </a>
         ))}

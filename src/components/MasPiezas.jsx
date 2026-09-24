@@ -1,16 +1,19 @@
 import ProductCard from './ProductCard'
 
-function Destacados({ productos }) {
+/** Sección genérica: piezas que no están asignadas a una artesana en particular. */
+function MasPiezas({ productos }) {
+  if (!productos?.length) return null
   return (
-    <section className="section destacados" id="piezas">
+    <section className="section destacados" id="mas-piezas">
       <div className="wrap">
         <div className="section-head">
           <div>
             <p className="kicker">Catálogo</p>
-            <h2>Las piezas más buscadas</h2>
+            <h2>Más piezas de la comunidad</h2>
           </div>
           <p className="section-note">
-            Todas las piezas son únicas. Si una ya se vendió, la artesana puede tejer otra similar.
+            Piezas nuevas y trabajos compartidos entre varias tejedoras. Consultá por WhatsApp quién la
+            hizo y si está disponible.
           </p>
         </div>
         <div className="product-grid">
@@ -23,4 +26,4 @@ function Destacados({ productos }) {
   )
 }
 
-export default Destacados
+export default MasPiezas

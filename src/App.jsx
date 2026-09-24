@@ -8,17 +8,22 @@ import PiezasGrandes from './components/PiezasGrandes'
 import VideoHistoria from './components/VideoHistoria'
 import ComoComprar from './components/ComoComprar'
 import Footer from './components/Footer'
-import { artesanas } from './data/catalog'
-
-const byId = (id) => artesanas.find((a) => a.id === id)
+import MasPiezas from './components/MasPiezas'
+import { useCatalog } from './hooks/useCatalog'
 
 function App() {
+  const { artesanas, destacados, generales } = useCatalog()
+  const artesanaPorId = (id) => artesanas.find((artesana) => artesana.id === id)
+  // Artesanas cargadas desde el admin que no tienen lugar fijo en el layout.
+  const artesanasFijas = new Set(['erlinda', 'lilian', 'micaela', 'malena', 'irene', 'clara', 'carina', 'maria', 'evelyn'])
+  const artesanasNuevas = artesanas.filter((artesana) => !artesanasFijas.has(artesana.id))
+
   return (
     <>
       <Header />
       <main>
-        <Hero />
-        <Destacados />
+        <Hero destacados={destacados} />
+        <Destacados productos={destacados} />
         <VideoHistoria />
 
         <StoryBand
@@ -44,8 +49,8 @@ function App() {
         </StoryBand>
 
         <div id="artesanas">
-          <ArtisanBlock artesana={byId('erlinda')} />
-          <ArtisanBlock artesana={byId('lilian')} />
+          <ArtisanBlock artesana={artesanaPorId('erlinda')} />
+          <ArtisanBlock artesana={artesanaPorId('lilian')} />
         </div>
 
         <StoryBand
@@ -66,16 +71,19 @@ function App() {
           </p>
         </StoryBand>
 
-        <ArtisanBlock artesana={byId('micaela')} />
-        <ArtisanBlock artesana={byId('malena')} />
-        <ArtisanBlock artesana={byId('irene')} />
+        <ArtisanBlock artesana={artesanaPorId('micaela')} />
+        <ArtisanBlock artesana={artesanaPorId('malena')} />
+        <ArtisanBlock artesana={artesanaPorId('irene')} />
 
         <ColoresMonte />
 
-        <ArtisanBlock artesana={byId('clara')} />
-        <ArtisanBlock artesana={byId('carina')} />
-        <ArtisanBlock artesana={byId('maria')} />
-        <ArtisanBlock artesana={byId('evelyn')} />
+        <ArtisanBlock artesana={artesanaPorId('clara')} />
+        <ArtisanBlock artesana={artesanaPorId('carina')} />
+        <ArtisanBlock artesana={artesanaPorId('maria')} />
+        <ArtisanBlock artesana={artesanaPorId('evelyn')} />
+        {artesanasNuevas.map((artesana) => (
+          <ArtisanBlock artesana={artesana} key={artesana.id} />
+        ))}
 
         <StoryBand
           kicker="Por qué comprar acá"
@@ -95,6 +103,7 @@ function App() {
           </p>
         </StoryBand>
 
+        <MasPiezas productos={generales} />
         <PiezasGrandes />
         <ComoComprar />
       </main>

@@ -1,0 +1,40 @@
+rules_version = '2';
+
+// Una sola admin. Reemplazar ADMIN_UID por el UID del usuario creado en
+// Firebase Console → Authentication. Mismo valor que VITE_ADMIN_UID en .env.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isAdmin() {
+      return request.auth != null && request.auth.uid == 'ffByWxqCkoRQVaN7ZC1ZR7iB60r1';
+    }
+
+    function validProducto(d) {
+      return d.nombre is string && d.nombre.size() > 0 && d.nombre.size() <= 80
+        && (!('descripcion' in d) || (d.descripcion is string && d.descripcion.size() <= 600))
+        && d.fotos is list && d.fotos.size() <= 12
+        && d.destacado is bool && d.activo is bool
+        && (d.artesanaId == null || d.artesanaId is string);
+    }
+
+    function validArtesana(d) {
+      return d.nombre is string && d.nombre.size() > 0 && d.nombre.size() <= 80
+        && d.foto is string && d.orden is number;
+    }
+
+    match /artesanas/{id} {
+      allow read: if true;
+      allow write: if isAdmin() && validArtesana(request.resource.data);
+      allow delete: if isAdmin();
+    }
+
+    match /productos/{id} {
+      allow read: if true;
+      allow create, update: if isAdmin() && validProducto(request.resource.data);
+      allow delete: if isAdmin();
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

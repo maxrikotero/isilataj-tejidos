@@ -668,3 +668,35 @@ a { color: inherit; }
   .footer-credit { flex-wrap: wrap; }
   .social-btn { width: 100%; justify-content: center; }
 }
+
+/* ---- Skeleton del panel admin (también fallback de Suspense) ---- */
+@keyframes skeleton-brillo {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+.skeleton-panel { min-height: 100vh; background: var(--crema-soft); }
+.skeleton-panel [class^="skeleton-"]:not(.skeleton-panel):not(.skeleton-top):not(.skeleton-cuerpo):not(.skeleton-side):not(.skeleton-main):not(.skeleton-cabecera):not(.skeleton-item) {
+  display: block;
+  background: linear-gradient(90deg, #ece4d4 25%, #f6f0e4 50%, #ece4d4 75%);
+  background-size: 200% 100%;
+  animation: skeleton-brillo 1.4s ease-in-out infinite;
+  border-radius: 6px;
+}
+.skeleton-linea { height: 14px; }
+.skeleton-circulo { width: 56px; height: 56px; border-radius: 50% !important; flex: none; }
+.skeleton-cuadro { width: 84px; height: 84px; border-radius: 8px !important; flex: none; }
+.skeleton-pill { width: 130px; height: 40px; border-radius: 999px !important; margin-left: auto; }
+.skeleton-top { display: flex; align-items: center; gap: 16px; padding: 18px 24px; background: #fff; border-bottom: 1px solid var(--linea); }
+.skeleton-cuerpo { display: grid; grid-template-columns: 240px 1fr; min-height: calc(100vh - 56px); }
+.skeleton-side { background: #fff; border-right: 1px solid var(--linea); padding: 24px 20px; display: grid; gap: 22px; align-content: start; }
+.skeleton-main { padding: 24px; display: grid; gap: 12px; align-content: start; }
+.skeleton-cabecera { display: flex; align-items: center; gap: 14px; margin-bottom: 12px; }
+.skeleton-item { display: grid; grid-template-columns: 84px 1fr; gap: 14px; align-items: center; background: #fff; border: 1px solid var(--linea); border-radius: var(--radius); padding: 10px; }
+.skeleton-item > div { display: grid; gap: 10px; }
+@media (max-width: 760px) {
+  .skeleton-cuerpo { grid-template-columns: 1fr; }
+  .skeleton-side { grid-template-columns: repeat(3, 1fr); border-right: none; border-bottom: 1px solid var(--linea); padding: 16px; gap: 14px; }
+  .skeleton-side .skeleton-linea { width: 100% !important; }
+  .skeleton-pill { width: 100%; margin-left: 0; }
+  .skeleton-cabecera { flex-wrap: wrap; }
+}

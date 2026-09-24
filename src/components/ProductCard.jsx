@@ -1,4 +1,5 @@
 import { waLink } from '../data/catalog'
+import { imgUrl } from '../lib/cloudinary'
 
 function ProductCard({ product, artesana }) {
   const nombreArtesana = artesana ?? product.artesana
@@ -9,7 +10,7 @@ function ProductCard({ product, artesana }) {
   return (
     <article className="product-card">
       <div className="product-media">
-        <img src={product.fotos[0]} alt={`${product.nombre} tejida en chaguar`} loading="lazy" />
+        <img src={imgUrl(product.fotos[0])} alt={`${product.nombre} tejida en chaguar`} loading="lazy" />
       </div>
       <div className="product-body">
         <h3>{product.nombre}</h3>
